@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { connectDB } from "./db.js";
 dotenv.config();
 
 import { connectDB } from "./db.js";
@@ -25,3 +26,6 @@ await connectDB(process.env.MONGO_URL);
 // /api/songs/:id (Delete song)
 
 app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
+
+
+
