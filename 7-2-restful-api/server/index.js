@@ -14,8 +14,35 @@ app.use(express.json());
 
 await connectDB(process.env.MONGO_URL);
 
-// api/songs (Read all songs)
 
+// ===========================================
+// GET /api/songs (Read all songs)
+// ===========================================
+app.get("/api/songs", async (_req, res) => {
+    try {
+        const rows = await Song.find().sort({ createdAt: -1 }); // newest first
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// ===========================================
+// GET /api/songs/:id (Read one song by ID)
+// ===========================================
+app.get("/api/songs/:id", async (req, res) => {
+    try {
+        const song = await Song.findById(req.params.id);
+
+        if (!song) {
+            return res.status(404).json({ message: "Song not found" });
+        }
+
+        res.json(song);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 // api/songs (Insert song)
 // ===============================
