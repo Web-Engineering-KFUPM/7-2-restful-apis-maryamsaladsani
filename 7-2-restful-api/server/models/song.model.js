@@ -7,6 +7,5 @@ const songSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // db schema
-
-
 export const Song = mongoose.model("Song", songSchema);
+
