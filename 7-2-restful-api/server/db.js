@@ -7,7 +7,7 @@
  */
 import mongoose from "mongoose";
 
-export async function connectDB(url) {
+export async function connectDB(MONGO_URL) {
   try {
     await mongoose.connect(MONGO_URL);
     console.log("[DB] Mongo connected");
