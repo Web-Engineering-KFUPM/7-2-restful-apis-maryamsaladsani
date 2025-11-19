@@ -44,7 +44,7 @@ app.get("/api/songs/:id", async (req, res) => {
     }
 });
 
-// api/songs (Insert song)
+
 // ===============================
 // POST /api/songs (Create new song)
 // ===============================
@@ -65,8 +65,31 @@ app.post("/api/songs", async (req, res) => {
     }
 });
 
-// /api/songs/:id (Update song)
 
+// ===========================================
+// PUT /api/songs/:id (Update a song)
+// ===========================================
+app.put("/api/songs/:id", async (req, res) => {
+    try {
+        const updated = await Song.findByIdAndUpdate(
+            req.params.id,
+            req.body || {},     // fields to update
+            {
+                new: true,        // return the updated document
+                runValidators: true,
+                context: "query", // required for validators to work properly
+            }
+        );
+
+        if (!updated) {
+            return res.status(404).json({ message: "Song not found" });
+        }
+
+        res.json(updated);
+    } catch (err) {
+        res.status(400).json({ message: err.message || "Update failed" });
+    }
+});
 
 // /api/songs/:id (Delete song)
 
